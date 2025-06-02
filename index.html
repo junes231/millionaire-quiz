@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Millionaire Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    .question { display: none; }
+    .question.active { display: block; }
+    button { display: block; margin: 10px 0; padding: 10px; width: 100%; }
+    #email-section { display: none; }
+  </style>
+</head>
+<body>
+  <h2>Answer These 7 Quick Questions</h2>
+
+  <div class="question active" id="q1">
+    <p>1. What motivates you to start an online business?</p>
+    <button onclick="next('q2')">Financial Freedom</button>
+    <button onclick="next('q2')">More Time with Family</button>
+    <button onclick="next('q2')">Quit 9-5 Job</button>
+  </div>
+
+  <div class="question" id="q2">
+    <p>2. How much time can you invest weekly?</p>
+    <button onclick="next('q3')">Less than 5 hours</button>
+    <button onclick="next('q3')">5–10 hours</button>
+    <button onclick="next('q3')">10+ hours</button>
+  </div>
+
+  <div class="question" id="q3">
+    <p>3. What’s your experience with online marketing?</p>
+    <button onclick="next('q4')">Beginner</button>
+    <button onclick="next('q4')">Some Knowledge</button>
+    <button onclick="next('q4')">Experienced</button>
+  </div>
+
+  <div class="question" id="q4">
+    <p>4. Are you willing to follow a proven step-by-step system?</p>
+    <button onclick="next('q5')">Absolutely</button>
+    <button onclick="next('q5')">Maybe</button>
+    <button onclick="next('q5')">Not Sure</button>
+  </div>
+
+  <div class="question" id="q5">
+    <p>5. What’s your preferred learning style?</p>
+    <button onclick="next('q6')">Video Tutorials</button>
+    <button onclick="next('q6')">Written Guides</button>
+    <button onclick="next('q6')">1-on-1 Coaching</button>
+  </div>
+
+  <div class="question" id="q6">
+    <p>6. Do you have a startup budget?</p>
+    <button onclick="next('q7')">Yes</button>
+    <button onclick="next('q7')">Not yet</button>
+    <button onclick="next('q7')">Looking for free options</button>
+  </div>
+
+  <div class="question" id="q7">
+    <p>7. Ready to get started today?</p>
+    <button onclick="showEmail()">Yes, let’s go!</button>
+    <button onclick="showEmail()">Need more info</button>
+    <button onclick="showEmail()">Still exploring</button>
+  </div>
+
+  <div id="email-section">
+    <h3>Enter your best email to see the results:</h3>
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSc0gPA29YuZKHHVwoP9EcaaZKkS0Xr9J7yIa9hfRtdgaVd4RA/formResponse" method="POST" target="_self" onsubmit="redirectAfterSubmit()">
+      <input type="email" name="entry.1570767202" required placeholder="Your email" style="width:100%; padding:10px; margin-bottom:10px;"><br>
+      <button type="submit">See My Result</button>
+    </form>
+  </div>
+
+  <script>
+    function next(nextId) {
+      document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+      document.getElementById(nextId).classList.add('active');
+    }
+
+    function showEmail() {
+      document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+      document.getElementById('email-section').style.display = 'block';
+    }
+
+    function redirectAfterSubmit() {
+      setTimeout(function () {
+        window.location.href = "https://millionairepartnership.com/webclass-d24#aff=Wdyguns";
+      }, 500);
+    }
+  </script>
+</body>
+</html>
