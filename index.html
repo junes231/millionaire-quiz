@@ -5,90 +5,107 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Millionaire Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    .question { display: none; }
-    .question.active { display: block; }
-    button { display: block; margin: 10px 0; padding: 10px; width: 100%; }
-    #email-section { display: none; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom right, #a8edea, #fed6e3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .quiz-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    .question {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+    .answers button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      background-color: #6c63ff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .answers button:hover {
+      background-color: #574b90;
+    }
+    .email-form {
+      display: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h2>Answer These 7 Quick Questions</h2>
-
-  <div class="question active" id="q1">
-    <p>1. What motivates you to start an online business?</p>
-    <button onclick="next('q2')">Financial Freedom</button>
-    <button onclick="next('q2')">More Time with Family</button>
-    <button onclick="next('q2')">Quit 9-5 Job</button>
-  </div>
-
-  <div class="question" id="q2">
-    <p>2. How much time can you invest weekly?</p>
-    <button onclick="next('q3')">Less than 5 hours</button>
-    <button onclick="next('q3')">5–10 hours</button>
-    <button onclick="next('q3')">10+ hours</button>
-  </div>
-
-  <div class="question" id="q3">
-    <p>3. What’s your experience with online marketing?</p>
-    <button onclick="next('q4')">Beginner</button>
-    <button onclick="next('q4')">Some Knowledge</button>
-    <button onclick="next('q4')">Experienced</button>
-  </div>
-
-  <div class="question" id="q4">
-    <p>4. Are you willing to follow a proven step-by-step system?</p>
-    <button onclick="next('q5')">Absolutely</button>
-    <button onclick="next('q5')">Maybe</button>
-    <button onclick="next('q5')">Not Sure</button>
-  </div>
-
-  <div class="question" id="q5">
-    <p>5. What’s your preferred learning style?</p>
-    <button onclick="next('q6')">Video Tutorials</button>
-    <button onclick="next('q6')">Written Guides</button>
-    <button onclick="next('q6')">1-on-1 Coaching</button>
-  </div>
-
-  <div class="question" id="q6">
-    <p>6. Do you have a startup budget?</p>
-    <button onclick="next('q7')">Yes</button>
-    <button onclick="next('q7')">Not yet</button>
-    <button onclick="next('q7')">Looking for free options</button>
-  </div>
-
-  <div class="question" id="q7">
-    <p>7. Ready to get started today?</p>
-    <button onclick="showEmail()">Yes, let’s go!</button>
-    <button onclick="showEmail()">Need more info</button>
-    <button onclick="showEmail()">Still exploring</button>
-  </div>
-
-  <div id="email-section">
-    <h3>Enter your best email to see the results:</h3>
-    <form action="https://docs.google.com/forms/d/e/1FAIpQLSc0gPA29YuZKHHVwoP9EcaaZKkS0Xr9J7yIa9hfRtdgaVd4RA/formResponse" method="POST" target="_self" onsubmit="redirectAfterSubmit()">
-      <input type="email" name="entry.1570767202" required placeholder="Your email" style="width:100%; padding:10px; margin-bottom:10px;"><br>
-      <button type="submit">See My Result</button>
-    </form>
+  <div class="quiz-container" id="quiz">
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers"></div>
+    <div class="email-form" id="emailForm">
+      <p>Enter your email to receive access:</p>
+      <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfZ-BUlHQ6zY6FCEyHZB_Mx_zHFDLx2s5XgQ0e3X6fvMZd6Iw/formResponse" method="POST" target="_self" onsubmit="setTimeout(() => { window.location.href = 'https://millionairepartnership.com/webclass-d24#aff=Wdyguns'; }, 500);">
+        <input name="entry.754347637" type="email" placeholder="Your email" required style="padding:10px;width:80%;border-radius:5px;border:1px solid #ccc;margin-bottom:10px;"><br/>
+        <button type="submit">Claim My Spot</button>
+      </form>
+    </div>
   </div>
 
   <script>
-    function next(nextId) {
-      document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
-      document.getElementById(nextId).classList.add('active');
+    const questions = [
+      "Are you looking to increase your income this year?",
+      "Do you have experience in online marketing?",
+      "How many hours per week can you dedicate to building a business?",
+      "Are you more motivated by freedom or money?",
+      "Do you prefer working solo or in a team?",
+      "How soon do you want to see results?",
+      "What’s your biggest obstacle in starting online?"
+    ];
+
+    const answers = [
+      ["Yes, absolutely!", "Maybe", "Not sure"],
+      ["Yes", "Some", "None"],
+      ["10+ hours", "5-10 hours", "Less than 5"],
+      ["Freedom", "Money", "Both"],
+      ["Solo", "Team", "Both"],
+      ["Immediately", "Within 3 months", "No rush"],
+      ["Lack of time", "Lack of money", "Lack of guidance"]
+    ];
+
+    let currentQuestion = 0;
+
+    function showQuestion() {
+      if (currentQuestion < questions.length) {
+        document.getElementById("question").innerText = questions[currentQuestion];
+        const answersHTML = answers[currentQuestion].map(ans => 
+          `<button onclick="nextQuestion()">${ans}</button>`).join("");
+        document.getElementById("answers").innerHTML = answersHTML;
+      } else {
+        document.getElementById("question").innerText = "Great! One last step...";
+        document.getElementById("answers").innerHTML = "";
+        document.getElementById("emailForm").style.display = "block";
+      }
     }
 
-    function showEmail() {
-      document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
-      document.getElementById('email-section').style.display = 'block';
+    function nextQuestion() {
+      currentQuestion++;
+      showQuestion();
     }
 
-    function redirectAfterSubmit() {
-      setTimeout(function () {
-        window.location.href = "https://millionairepartnership.com/webclass-d24#aff=Wdyguns";
-      }, 500);
-    }
+    window.onload = showQuestion;
   </script>
 </body>
 </html>
