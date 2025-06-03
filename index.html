@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Millionaire Quiz Funnel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #001f3f, #000000);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .quiz-container {
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    button {
+      background: linear-gradient(to right, #FFD700, #00BFFF);
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz">
+    <h2 id="question">Loading...</h2>
+    <div id="answers"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "What is your current income level?",
+        a: ["Under $1,000/month", "$1,000 - $5,000/month", "Above $5,000/month"]
+      },
+      {
+        q: "Do you currently run an online business?",
+        a: ["No", "Yes, part-time", "Yes, full-time"]
+      },
+      {
+        q: "How much time can you invest per week?",
+        a: ["< 5 hours", "5-15 hours", "15+ hours"]
+      },
+      {
+        q: "What motivates you to build wealth?",
+        a: ["Freedom", "Family", "Luxury"]
+      },
+      {
+        q: "Have you tried affiliate marketing before?",
+        a: ["No", "Yes, not successful", "Yes, some success"]
+      },
+      {
+        q: "What’s your experience with digital tools?",
+        a: ["Beginner", "Intermediate", "Expert"]
+      },
+      {
+        q: "Are you ready to start today?",
+        a: ["Maybe", "Yes", "Absolutely"]
+      }
+    ];
+
+    let current = 0;
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+
+    function loadQuestion(index) {
+      if (index >= questions.length) {
+        showEmailForm();
+        return;
+      }
+      const q = questions[index];
+      questionEl.textContent = q.q;
+      answersEl.innerHTML = "";
+      q.a.forEach(answer => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => {
+          current++;
+          loadQuestion(current);
+        };
+        answersEl.appendChild(btn);
+      });
+    }
+
+    function showEmailForm() {
+      questionEl.innerHTML = "Enter your email to see your result:";
+      answersEl.innerHTML = `
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLSfUY6xbfWPy6CdapCJQcoVHW1Pfsdsvd9yKwa2J2SyASF0QlA/formResponse" method="POST" target="_blank" onsubmit="redirectAfterSubmit()">
+          <input type="email" name="entry.972272214" placeholder="Your email" required />
+          <button type="submit">Submit</button>
+        </form>
+      `;
+    }
+
+    function redirectAfterSubmit() {
+      setTimeout(() => {
+        window.location.href = "https://millionairepartnership.com/webclass-d24#aff=Wdyguns";
+      }, 1000);
+    }
+
+    loadQuestion(current);
+  </script>
+</body>
+</html>
