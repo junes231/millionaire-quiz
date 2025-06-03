@@ -4,126 +4,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Millionaire Quiz Funnel</title>
+  <title>Millionaire Quiz</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #001f3f, #000000);
+      background: linear-gradient(to bottom, #0b1e3d, #000);
       color: white;
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       min-height: 100vh;
-    }
-    .quiz-container {
-      max-width: 500px;
-      width: 90%;
-      border: 1px solid rgba(255, 255, 255, 0.3);
       padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      background-color: rgba(255, 255, 255, 0.05);
+    }
+    .question-container {
+      max-width: 600px;
+      width: 100%;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+    }
+    h2 {
+      font-size: 20px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
     }
     button {
-      background: linear-gradient(to right, #FFD700, #00BFFF);
-      color: black;
+      background: linear-gradient(to right, #fcd440, #fcb900);
       border: none;
-      padding: 10px 20px;
-      margin: 10px 0;
-      border-radius: 5px;
-      font-weight: bold;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
+      color: #000;
+    }
+    #email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     input[type="email"] {
-      width: 100%;
-      padding: 10px;
-      margin: 15px 0;
-      border-radius: 5px;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
       border: none;
     }
   </style>
 </head>
 <body>
-  <div class="quiz-container" id="quiz">
-    <h2 id="question">Loading...</h2>
-    <div id="answers"></div>
-  </div>
+  <div class="question-container" id="quiz"></div>
 
   <script>
-    const questions = [
-      {
-        q: "What is your current income level?",
-        a: ["Under $1,000/month", "$1,000 - $5,000/month", "Above $5,000/month"]
-      },
-      {
-        q: "Do you currently run an online business?",
-        a: ["No", "Yes, part-time", "Yes, full-time"]
-      },
-      {
-        q: "How much time can you invest per week?",
-        a: ["< 5 hours", "5-15 hours", "15+ hours"]
-      },
-      {
-        q: "What motivates you to build wealth?",
-        a: ["Freedom", "Family", "Luxury"]
-      },
-      {
-        q: "Have you tried affiliate marketing before?",
-        a: ["No", "Yes, not successful", "Yes, some success"]
-      },
-      {
-        q: "What’s your experience with digital tools?",
-        a: ["Beginner", "Intermediate", "Expert"]
-      },
-      {
-        q: "Are you ready to start today?",
-        a: ["Maybe", "Yes", "Absolutely"]
-      }
+    const quizData = [
+      { question: "What describes your current financial goal?", answers: ["Build wealth", "Earn side income", "Quit my job"] },
+      { question: "How much time can you commit weekly?", answers: ["< 5 hours", "5-10 hours", "10+ hours"] },
+      { question: "Do you have any online business experience?", answers: ["Yes", "No", "Some"] },
+      { question: "What motivates you the most?", answers: ["Freedom", "Family", "Success"] },
+      { question: "What's your current employment?", answers: ["Employed", "Self-employed", "Unemployed"] },
+      { question: "How soon do you want to start?", answers: ["Immediately", "This week", "This month"] },
+      { question: "Are you willing to learn and take action?", answers: ["Absolutely", "Maybe", "Not sure"] }
     ];
 
-    let current = 0;
+    let currentIndex = 0;
+    const quizContainer = document.getElementById('quiz');
 
-    const questionEl = document.getElementById("question");
-    const answersEl = document.getElementById("answers");
+    function showQuestion() {
+      const q = quizData[currentIndex];
+      quizContainer.innerHTML = `
+        <h2>Question ${currentIndex + 1} of ${quizData.length}</h2>
+        <p>${q.question}</p>
+        <div class="answers">
+          ${q.answers.map(ans => `<button onclick="nextQuestion()">${ans}</button>`).join("")}
+        </div>
+      `;
+    }
 
-    function loadQuestion(index) {
-      if (index >= questions.length) {
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < quizData.length) {
+        showQuestion();
+      } else {
         showEmailForm();
-        return;
       }
-      const q = questions[index];
-      questionEl.textContent = q.q;
-      answersEl.innerHTML = "";
-      q.a.forEach(answer => {
-        const btn = document.createElement("button");
-        btn.textContent = answer;
-        btn.onclick = () => {
-          current++;
-          loadQuestion(current);
-        };
-        answersEl.appendChild(btn);
-      });
     }
 
     function showEmailForm() {
-      questionEl.innerHTML = "Enter your email to see your result:";
-      answersEl.innerHTML = `
-        <form action="https://docs.google.com/forms/d/e/1FAIpQLSfUY6xbfWPy6CdapCJQcoVHW1Pfsdsvd9yKwa2J2SyASF0QlA/formResponse" method="POST" target="_blank" onsubmit="redirectAfterSubmit()">
-          <input type="email" name="entry.972272214" placeholder="Your email" required />
+      quizContainer.innerHTML = `
+        <h2>Enter your email to see your results</h2>
+        <form id="email-form" onsubmit="submitEmail(event)">
+          <input type="email" id="email" required placeholder="Your Email" />
           <button type="submit">Submit</button>
         </form>
       `;
     }
 
-    function redirectAfterSubmit() {
-      setTimeout(() => {
-        window.location.href = "https://millionairepartnership.com/webclass-d24#aff=Wdyguns";
-      }, 1000);
+    function submitEmail(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+
+      // 提交到 Google 表单（静默）
+      fetch("https://docs.google.com/forms/d/e/1FAIpQLSfUY6xbfWPy6CdapCJQcoVHW1Pfsdsvd9yKwa2J2SyASF0QlA/formResponse", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "entry.972272214=" + encodeURIComponent(email)
+      });
+
+      // 跳转到联盟链接页面（只跳转一个页面）
+      window.location.href = "https://millionairepartnership.com/webclass-d24#aff=Wdyguns";
     }
 
-    loadQuestion(current);
+    showQuestion();
   </script>
 </body>
 </html>
